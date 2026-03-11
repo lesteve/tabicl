@@ -1,0 +1,724 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>TabICLv2: A state-of-the-art tabular foundation model &#8212; TabICL 2.0.3 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=664ffad9"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'index';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="#">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">TabICL 2.0.3 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none"></div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <p><a class="reference external" href="https://github.com/soda-inria/tabicl/actions/workflows/testing.yml"><img alt="test" src="https://github.com/soda-inria/tabicl/actions/workflows/testing.yml/badge.svg" /></a> <a class="reference external" href="https://badge.fury.io/py/tabicl"><img alt="PyPI version" src="https://badge.fury.io/py/tabicl.svg" /></a> <a class="reference external" href="https://pypistats.org/packages/tabicl"><img alt="Downloads" src="https://img.shields.io/pypi/dm/tabicl" /></a></p>
+<section id="tabiclv2-a-state-of-the-art-tabular-foundation-model">
+<h1>TabICLv2: A state-of-the-art tabular foundation model<a class="headerlink" href="#tabiclv2-a-state-of-the-art-tabular-foundation-model" title="Link to this heading">#</a></h1>
+<p>This repository is the official implementation of <strong>TabICLv2</strong>
+(<a class="reference external" href="https://arxiv.org/abs/2602.11139">arXiv</a>) and <strong>TabICL</strong> (<a class="reference external" href="https://arxiv.org/abs/2502.05564">ICML
+2025</a>).</p>
+<p><strong>State-of-the-art accuracy even without hyperparameter tuning:</strong>
+TabICLv2 is the new state-of-the-art model for tabular classification
+and regression on the <a class="reference external" href="https://tabarena.ai">TabArena</a> and
+<a class="reference external" href="https://arxiv.org/abs/2407.00956">TALENT</a> benchmarks. It does not
+require hyperparameter tuning and still outperforms heavily tuned
+XGBoost, CatBoost, or LightGBM on TabArena on ~80% of datasets.</p>
+<p><strong>Easy to use:</strong> TabICL is pip-installable and scikit-learn compliant.
+It is also <strong>open source</strong> (including <a class="reference external" href="#pre-training">pre-training</a>
+for v1), with a permissive license.</p>
+<p><strong>Speed:</strong> TabICL performs <code class="docutils literal notranslate"><span class="pre">fit</span></code> and <code class="docutils literal notranslate"><span class="pre">predict</span></code> jointly via a single
+forward pass through a pre-trained transformer model. For larger
+datasets, we recommend a GPU. On an H100 GPU, TabIClv2 can <code class="docutils literal notranslate"><span class="pre">fit</span></code> and
+<code class="docutils literal notranslate"><span class="pre">predict</span></code> a dataset with 50,000 samples and 100 features in under 10
+seconds, which is 10x faster than TabPFN-2.5. Through KV caching, TabICL
+supports faster repeated inference on the same training data.</p>
+<p><strong>Scalability:</strong> TabICL shows excellent performance on benchmarks with
+300 to 100,000 training samples and up to 2,000 features. It can scale
+to even larger datasets (e.g., 500K samples) through CPU and disk
+offloading, though its accuracy may degrade at some point.</p>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">#</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>tabicl
+</pre></div>
+</div>
+<p>Optional dependencies can be installed as needed:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>tabicl<span class="o">[</span>forecast<span class="o">]</span><span class="w">   </span><span class="c1"># time series forecasting</span>
+pip<span class="w"> </span>install<span class="w"> </span>tabicl<span class="o">[</span>pretrain<span class="o">]</span><span class="w">   </span><span class="c1"># pre-training</span>
+pip<span class="w"> </span>install<span class="w"> </span>tabicl<span class="o">[</span>all<span class="o">]</span><span class="w">        </span><span class="c1"># everything</span>
+</pre></div>
+</div>
+<p>On Intel Macs, installing PyTorch via <code class="docutils literal notranslate"><span class="pre">pip</span></code> may fail. In that case,
+install it first with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>install<span class="w"> </span>pytorch<span class="w"> </span>-c<span class="w"> </span>pytorch
+</pre></div>
+</div>
+<p>Then install <code class="docutils literal notranslate"><span class="pre">tabicl</span></code> as above.</p>
+</section>
+<section id="basic-usage">
+<h2>Basic usage<a class="headerlink" href="#basic-usage" title="Link to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">tabicl</span><span class="w"> </span><span class="kn">import</span> <span class="n">TabICLClassifier</span><span class="p">,</span> <span class="n">TabICLRegressor</span>
+
+<span class="n">clf</span> <span class="o">=</span> <span class="n">TabICLClassifier</span><span class="p">()</span>
+<span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>  <span class="c1"># downloads checkpoint on first use, otherwise cheap</span>
+<span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>  <span class="c1"># in-context learning happens here</span>
+
+<span class="n">reg</span> <span class="o">=</span> <span class="n">TabICLRegressor</span><span class="p">()</span>
+<span class="n">reg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">reg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To speed up repeated inference on the same training data, enable KV
+caching. The cache is built during <code class="docutils literal notranslate"><span class="pre">fit</span></code> and reused across <code class="docutils literal notranslate"><span class="pre">predict</span></code>
+calls. Note that this consumes additional memory to store the cached
+projections, so consider the trade-off for your use case:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">clf</span> <span class="o">=</span> <span class="n">TabICLClassifier</span><span class="p">(</span><span class="n">kv_cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>  <span class="c1"># caches key-value projections for training data</span>
+<span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>  <span class="c1"># fast: only processes test data by reusing the cached context</span>
+</pre></div>
+</div>
+<p>Save and load a fitted classifier or regressor:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">clf</span><span class="o">.</span><span class="n">save</span><span class="p">(</span>
+    <span class="s2">&quot;classifier.pkl&quot;</span><span class="p">,</span>
+    <span class="n">save_model_weights</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  <span class="c1"># if False, reload from checkpoint on load</span>
+    <span class="n">save_training_data</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>   <span class="c1"># if True, include training data; if False, discard it (requires KV cache)</span>
+    <span class="n">save_kv_cache</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>        <span class="c1"># if True and KV cache exists, save it</span>
+<span class="p">)</span>
+<span class="n">clf</span> <span class="o">=</span> <span class="n">TabICLClassifier</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;classifier.pkl&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>When KV cache exists and is saved, you can set
+<code class="docutils literal notranslate"><span class="pre">save_training_data=False</span></code> to exclude cached training data, which may
+be useful for data privacy.</p>
+</section>
+<section id="advanced-configuration">
+<h2>Advanced configuration<a class="headerlink" href="#advanced-configuration" title="Link to this heading">#</a></h2>
+<p>TabICL offers a set of parameters to customize its behavior. The
+following example shows all available parameters with their default
+values and brief descriptions:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">tabicl</span><span class="w"> </span><span class="kn">import</span> <span class="n">TabICLClassifier</span>
+
+<span class="n">clf</span> <span class="o">=</span> <span class="n">TabICLClassifier</span><span class="p">(</span>
+    <span class="n">n_estimators</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>  <span class="c1"># number of ensemble members, more = better but slower</span>
+    <span class="n">norm_methods</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="c1"># normalization methods to try</span>
+    <span class="n">feat_shuffle_method</span><span class="o">=</span><span class="s2">&quot;latin&quot;</span><span class="p">,</span>  <span class="c1"># feature permutation strategy</span>
+    <span class="n">class_shuffle_method</span><span class="o">=</span><span class="s2">&quot;shift&quot;</span><span class="p">,</span>  <span class="c1"># class permutation strategy</span>
+    <span class="n">outlier_threshold</span><span class="o">=</span><span class="mf">4.0</span><span class="p">,</span>  <span class="c1"># z-score threshold for outlier detection and clipping</span>
+    <span class="n">softmax_temperature</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span>  <span class="c1"># temperature to control prediction confidence</span>
+    <span class="n">average_logits</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># average logits (True) or probabilities (False)</span>
+    <span class="n">support_many_classes</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># handle &gt;10 classes automatically</span>
+    <span class="n">batch_size</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>  <span class="c1"># ensemble members processed together, lower to save memory</span>
+    <span class="n">kv_cache</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  <span class="c1"># cache training data KV projections for faster repeated inference</span>
+    <span class="n">model_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="c1"># path to checkpoint, None downloads from Hugging Face</span>
+    <span class="n">allow_auto_download</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># auto-download checkpoint if not found locally</span>
+    <span class="n">checkpoint_version</span><span class="o">=</span><span class="s2">&quot;tabicl-classifier-v2-20260212.ckpt&quot;</span><span class="p">,</span>  <span class="c1"># pretrained checkpoint version</span>
+    <span class="n">device</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="c1"># inference device, None auto-selects CUDA or CPU; specify &quot;mps&quot; for Apple Silicon</span>
+    <span class="n">use_amp</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>  <span class="c1"># automatic mixed precision for faster inference</span>
+    <span class="n">use_fa3</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>  <span class="c1"># Flash Attention 3 for Hopper GPUs (e.g. H100)</span>
+    <span class="n">offload_mode</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>  <span class="c1"># automatically decide when to use cpu/disk offloading</span>
+    <span class="n">disk_offload_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="c1"># directory for disk offloading</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span>  <span class="c1"># random seed for reproducibility</span>
+    <span class="n">n_jobs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="c1"># number of PyTorch threads for CPU inference</span>
+    <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  <span class="c1"># print detailed information during inference</span>
+    <span class="n">inference_config</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="c1"># fine-grained inference control for advanced users</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">TabICLRegressor</span></code> accepts the same parameters except for the
+classification-specific ones: <code class="docutils literal notranslate"><span class="pre">class_shuffle_method</span></code>,
+<code class="docutils literal notranslate"><span class="pre">softmax_temperature</span></code>, <code class="docutils literal notranslate"><span class="pre">average_logits</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">support_many_classes</span></code>.</p>
+</section>
+<section id="available-models">
+<h2>Available models<a class="headerlink" href="#available-models" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Model</p></th>
+<th class="head"><p>Classification checkpoint</p></th>
+<th class="head"><p>Regression checkpoint</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>TabI
+CLv2</strong>
+(<a class="reference external" href="https://arxiv.org/abs/2602.11139">ar
+Xiv</a>)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">tabic</span>
+<span class="pre">l-classifier-v2-20260212.ckpt</span></code>
+(default)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">tabicl-reg</span>
+<span class="pre">ressor-v2-20260212.ckpt</span></code>
+(default)</p></td>
+</tr>
+<tr class="row-odd"><td><p>**
+TabICL
+v1.1**
+(May
+2025,
+no
+paper)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">tabicl-</span>
+<span class="pre">classifier-v1.1-20250506.ckpt</span></code></p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>TabI
+CLv1</strong>
+(<a class="reference external" href="https://arxiv.org/abs/2502.05564">ICML
+2
+025</a>)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">tabic</span>
+<span class="pre">l-classifier-v1-20250208.ckpt</span></code></p></td>
+<td><p>—</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul class="simple">
+<li><p><strong>TabICLv2</strong>: Our state-of-the-art model, supporting both
+classification and regression. Strongly improved accuracy over v1
+through better synthetic pre-training data, architectural
+improvements, and better pre-training, with comparable runtime.</p></li>
+<li><p><strong>TabICLv1.1</strong>: TabICLv1 post-trained on an early version of the v2
+prior. Classification only.</p></li>
+<li><p><strong>TabICLv1</strong>: Original model. Classification only. TabICLv1 and v1.1
+originally used <code class="docutils literal notranslate"><span class="pre">n_estimators=32</span></code>; we reduced the default to 8
+afterwards.</p></li>
+</ul>
+</section>
+<section id="time-series-forecasting">
+<h2>Time series forecasting<a class="headerlink" href="#time-series-forecasting" title="Link to this heading">#</a></h2>
+<p>TabICL can be used for zero-shot time series forecasting via
+<code class="docutils literal notranslate"><span class="pre">TabICLForecaster</span></code>. Install the forecast dependencies first:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>tabicl<span class="o">[</span>forecast<span class="o">]</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">TabICLForecaster</span></code> accepts the following parameters:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">tabicl</span><span class="w"> </span><span class="kn">import</span> <span class="n">TabICLForecaster</span>
+
+<span class="n">forecaster</span> <span class="o">=</span> <span class="n">TabICLForecaster</span><span class="p">(</span>
+    <span class="n">max_context_length</span><span class="o">=</span><span class="mi">4096</span><span class="p">,</span>  <span class="c1"># max historical timesteps to use as context</span>
+    <span class="n">temporal_features</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="c1"># timestep index, calendar patterns, and seasonality</span>
+    <span class="n">point_estimate</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span><span class="p">,</span>  <span class="c1"># point prediction method: &quot;mean&quot; or &quot;median&quot;</span>
+    <span class="n">tabicl_config</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="c1"># passed to TabICLRegressor; None uses default settings</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>The following example shows how it works for univariate forecasting:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tabicl</span><span class="w"> </span><span class="kn">import</span> <span class="n">TabICLForecaster</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tabicl.forecast</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimeSeriesDataFrame</span><span class="p">,</span> <span class="n">plot_forecast</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+    <span class="s2">&quot;https://autogluon.s3.amazonaws.com/datasets/timeseries/australian_electricity_subset/test.csv&quot;</span><span class="p">,</span>
+    <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;timestamp&quot;</span><span class="p">],</span>
+<span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">TimeSeriesDataFrame</span><span class="o">.</span><span class="n">from_data_frame</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+<span class="n">prediction_length</span> <span class="o">=</span> <span class="mi">96</span>
+<span class="n">selected_items</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">item_ids</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">train_data</span><span class="p">,</span> <span class="n">test_data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">train_test_split</span><span class="p">(</span><span class="n">prediction_length</span><span class="p">)</span>
+
+<span class="n">context_df</span> <span class="o">=</span> <span class="n">train_data</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">context_df</span> <span class="o">=</span> <span class="n">context_df</span><span class="p">[</span><span class="n">context_df</span><span class="p">[</span><span class="s2">&quot;item_id&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">selected_items</span><span class="p">)]</span>
+<span class="n">test_df</span> <span class="o">=</span> <span class="n">test_data</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">test_df</span> <span class="o">=</span> <span class="n">test_df</span><span class="p">[</span><span class="n">test_df</span><span class="p">[</span><span class="s2">&quot;item_id&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">selected_items</span><span class="p">)]</span>
+<span class="n">test_df</span> <span class="o">=</span> <span class="n">test_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;item_id&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="n">prediction_length</span><span class="p">)</span>
+
+<span class="n">forecaster</span> <span class="o">=</span> <span class="n">TabICLForecaster</span><span class="p">(</span><span class="n">max_context_length</span><span class="o">=</span><span class="mi">10240</span><span class="p">)</span>
+<span class="n">pred_df</span> <span class="o">=</span> <span class="n">forecaster</span><span class="o">.</span><span class="n">predict_df</span><span class="p">(</span><span class="n">context_df</span><span class="p">,</span> <span class="n">prediction_length</span><span class="o">=</span><span class="n">prediction_length</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plot_forecast</span><span class="p">(</span><span class="n">context_df</span><span class="o">=</span><span class="n">context_df</span><span class="p">,</span> <span class="n">pred_df</span><span class="o">=</span><span class="n">pred_df</span><span class="p">,</span> <span class="n">test_df</span><span class="o">=</span><span class="n">test_df</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">TabICLForecaster</span></code> is heavily inspired by
+<a class="reference external" href="https://arxiv.org/abs/2501.02945v3">TabPFN-TS</a>. We may later improve
+it to enhance the ability of TabICL for time series forecasting.</p>
+</section>
+<section id="pre-training">
+<h2>Pre-training<a class="headerlink" href="#pre-training" title="Link to this heading">#</a></h2>
+<p>Pre-training code (including synthetic data generation) is currently
+available for the v1 model. The scripts folder provides the commands for
+<a class="reference external" href="./scripts/train_stage1.sh">stage 1</a>, <a class="reference external" href="./scripts/train_stage2.sh">stage
+2</a>, and <a class="reference external" href="./scripts/train_stage3.sh">stage
+3</a> of curriculum learning. Pre-training
+code for v2 will be released upon publication.</p>
+</section>
+<section id="nanotabicl-a-minimal-architecture-implementation">
+<h2>Nanotabicl: a minimal architecture implementation<a class="headerlink" href="#nanotabicl-a-minimal-architecture-implementation" title="Link to this heading">#</a></h2>
+<p>We provide a minimal implementation of the TabICLv2 architecture
+<a class="reference external" href="https://github.com/soda-inria/nanotabicl">here</a>, for educational and
+experimental purposes.</p>
+</section>
+<section id="todo">
+<h2>TODO<a class="headerlink" href="#todo" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>☐ Documentation</p></li>
+<li><p>☐ Multi-GPU parallel inference</p></li>
+</ul>
+</section>
+<section id="faq">
+<h2>FAQ<a class="headerlink" href="#faq" title="Link to this heading">#</a></h2>
+<p><strong>What is TabICL?</strong> TabICL is a tabular foundation model (like TabPFN).
+It uses in-context learning (ICL) to learn from new data in a single
+forward pass through a Transformer model:
+<code class="docutils literal notranslate"><span class="pre">y_pred</span> <span class="pre">=</span> <span class="pre">model(X_train,</span> <span class="pre">y_train,</span> <span class="pre">X_test)</span></code> (this is called inside
+<code class="docutils literal notranslate"><span class="pre">predict()</span></code>). It has acquired strong learning capabilities through
+pre-training on millions of synthetic datasets.</p>
+<p><strong>How fast is TabICL?</strong> On datasets with <span class="math notranslate nohighlight">\(n\)</span> training rows and
+<span class="math notranslate nohighlight">\(m\)</span> columns, the runtime complexity of TabICL (v1 and v2) is
+<span class="math notranslate nohighlight">\(O(n^2 + nm^2)\)</span>. On datasets with many rows and columns, it can be
+10x faster than TabPFN-2.5. On modern GPUs, TabICL can handle a million
+samples in a few minutes without RAM overflow thanks to CPU and disk
+offloading.</p>
+<p><strong>What dataset sizes work well?</strong> TabICLv2 is pre-trained on datasets
+between 300 and 48K training samples. However, it can generalize to
+larger datasets to some extent, and we see good results even on some
+datasets with 600K samples. We have not tested if TabICL generalizes to
+datasets smaller than 300 samples.</p>
+<p><strong>What about the number of columns?</strong> TabICLv2 is pre-trained on
+datasets between 2 and 100 columns. We see good generalization to more
+columns and don’t know where the limit is.</p>
+</section>
+<section id="preprocessing">
+<h2>Preprocessing<a class="headerlink" href="#preprocessing" title="Link to this heading">#</a></h2>
+<section id="simple-built-in-preprocessing">
+<h3>Simple built-in preprocessing<a class="headerlink" href="#simple-built-in-preprocessing" title="Link to this heading">#</a></h3>
+<p>If the input <code class="docutils literal notranslate"><span class="pre">X</span></code> to TabICL is a pandas DataFrame, TabICL will
+automatically: - Detect and ordinal encode categorical columns
+(including string, object, category, and boolean types) - Create a
+separate category for missing values in categorical features - Perform
+mean imputation for missing numerical values (encoded as NaN)</p>
+<p>If the input <code class="docutils literal notranslate"><span class="pre">X</span></code> is a numpy array, TabICL assumes that ordinal
+encoding and missing value imputation have already been performed.</p>
+<p>For both input types, TabICL applies additional preprocessing: - Outlier
+detection and removal - Feature scaling and normalization - Feature
+shuffling for ensemble diversity</p>
+</section>
+<section id="advanced-data-preprocessing-with-skrub">
+<h3>Advanced data preprocessing with skrub<a class="headerlink" href="#advanced-data-preprocessing-with-skrub" title="Link to this heading">#</a></h3>
+<p>Real-world datasets often contain complex heterogeneous data that
+benefits from more sophisticated preprocessing. For these scenarios, we
+recommend <a class="reference external" href="https://skrub-data.org/stable/index.html">skrub</a>, a
+powerful library designed specifically for advanced tabular data
+preparation.</p>
+<p><strong>Why use skrub?</strong> - Handles diverse data types (numerical, categorical,
+text, datetime, etc.) - Provides robust preprocessing for dirty data -
+Offers sophisticated feature engineering capabilities - Supports
+multi-table integration and joins</p>
+<section id="installation-1">
+<span id="id1"></span><h4>Installation<a class="headerlink" href="#installation-1" title="Link to this heading">#</a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>skrub<span class="w"> </span>-U
+</pre></div>
+</div>
+</section>
+<section id="basic-integration">
+<h4>Basic Integration<a class="headerlink" href="#basic-integration" title="Link to this heading">#</a></h4>
+<p>Use skrub’s
+<a class="reference external" href="https://skrub-data.org/stable/reference/generated/skrub.TableVectorizer.html">TableVectorizer</a>
+to transform your raw data before passing it to TabICLClassifier:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">skrub</span><span class="w"> </span><span class="kn">import</span> <span class="n">TableVectorizer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tabicl</span><span class="w"> </span><span class="kn">import</span> <span class="n">TabICLClassifier</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_pipeline</span>
+
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
+    <span class="n">TableVectorizer</span><span class="p">(</span><span class="n">low_cardinality</span><span class="o">=</span><span class="s2">&quot;passthrough&quot;</span><span class="p">),</span>  <span class="c1"># Automatically handles various data types</span>
+    <span class="n">TabICLClassifier</span><span class="p">()</span>
+<span class="p">)</span>
+
+<span class="n">pipeline</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>  <span class="c1"># X should be a DataFrame</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="citation">
+<h2>Citation<a class="headerlink" href="#citation" title="Link to this heading">#</a></h2>
+<p>If you use TabICL for research purposes, please cite our papers for
+<a class="reference external" href="https://arxiv.org/abs/2502.05564">TabICL</a> and
+<a class="reference external" href="https://arxiv.org/abs/2602.11139">TabICLv2</a>:</p>
+<div class="highlight-bibtex notranslate"><div class="highlight"><pre><span></span><span class="nc">@inproceedings</span><span class="p">{</span><span class="nl">qu2025tabicl</span><span class="p">,</span>
+<span class="w">  </span><span class="na">title</span><span class="p">=</span><span class="s">{Tab{ICL}: {A} Tabular Foundation Model for In-Context Learning on Large Data}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">author</span><span class="p">=</span><span class="s">{Qu, Jingang and Holzm{\&quot;u}ller, David and Varoquaux, Ga{\&quot;e}l and Le Morvan, Marine}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">booktitle</span><span class="p">=</span><span class="s">{International Conference on Machine Learning}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">year</span><span class="p">=</span><span class="s">{2025}</span>
+<span class="p">}</span>
+
+<span class="nc">@article</span><span class="p">{</span><span class="nl">qu2026tabiclv2</span><span class="p">,</span>
+<span class="w">  </span><span class="na">title</span><span class="p">=</span><span class="s">{{TabICLv2}: {A} better, faster, scalable, and open tabular foundation model}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">author</span><span class="p">=</span><span class="s">{Qu, Jingang and Holzm{\&quot;u}ller, David and Varoquaux, Ga{\&quot;e}l and Le Morvan, Marine}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">journal</span><span class="p">=</span><span class="s">{arXiv preprint arXiv:2602.11139}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">year</span><span class="p">=</span><span class="s">{2026}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="contributors">
+<h2>Contributors<a class="headerlink" href="#contributors" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/jingangQu">Jingang Qu</a></p></li>
+<li><p><a class="reference external" href="https://github.com/dholzmueller">David Holzmüller</a></p></li>
+<li><p><a class="reference external" href="https://github.com/marineLM">Marine Le Morvan</a></p></li>
+</ul>
+</section>
+<section id="star-history">
+<h2>Star history<a class="headerlink" href="#star-history" title="Link to this heading">#</a></h2>
+<p><a class="reference external" href="https://www.star-history.com/#soda-inria/tabicl&amp;type=date&amp;legend=top-left"><img alt="Star History Chart" src="https://api.star-history.com/svg?repos=soda-inria/tabicl&amp;type=date&amp;legend=top-left" /></a></p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-usage">Basic usage</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-configuration">Advanced configuration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#available-models">Available models</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#time-series-forecasting">Time series forecasting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pre-training">Pre-training</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nanotabicl-a-minimal-architecture-implementation">Nanotabicl: a minimal architecture implementation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#todo">TODO</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#faq">FAQ</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preprocessing">Preprocessing</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-built-in-preprocessing">Simple built-in preprocessing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-data-preprocessing-with-skrub">Advanced data preprocessing with skrub</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#installation-1">Installation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-integration">Basic Integration</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#citation">Citation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contributors">Contributors</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#star-history">Star history</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, TabICL authors.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
